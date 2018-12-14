@@ -12,31 +12,31 @@ typedef struct sList list;
 
 struct sList
 {
-	flowerListNode *		m_head;					/**< Pointeur sur la tête de liste										*/
+	flowerListNode *		m_head;					/**< Pointeur sur la tÃªte de liste										*/
 };
 
 typedef struct sFlower
 {
-	float					m_petalWidth;			/**< Largeur pétale (paramètre 4)										*/
-	float					m_petalLength;			/**< Longueur pétal (paramètre 3)										*/
-	float					m_sepalWidth;			/**< Largeur sépal (paramètre 2)										*/
-	float					m_sepalLength;			/**< Longueur sépal (paramètre 1)										*/
-	char					m_specieNamed[30];		/**< Nom de l'éspèce (classe)											*/
+	float					m_petalWidth;			/**< Largeur pÃ©tale (paramÃ¨tre 4)										*/
+	float					m_petalLength;			/**< Longueur pÃ©tal (paramÃ¨tre 3)										*/
+	float					m_sepalWidth;			/**< Largeur sÃ©pal (paramÃ¨tre 2)										*/
+	float					m_sepalLength;			/**< Longueur sÃ©pal (paramÃ¨tre 1)										*/
+	char					m_specieNamed[30];		/**< Nom de l'Ã©spÃ¨ce (classe)											*/
 }flower;
 
 struct sFlowerListNode
 {
-	flower					m_node;					/**< Caractéristique de la fleur										*/
+	flower				m_node;					/**< CaractÃ©ristique de la fleur										*/
 	flowerListNode *		m_next;					/**< Pointeur vers le noeud de liste suivant.							*/
 };
 
 struct sNode
 {
-	int						m_valueCompared;		/**< Valeur de comparaison des paramètre								*/
-	int 					m_parameter;			/**< Paramètre comparé													*/
+	int						m_valueCompared;		/**< Valeur de comparaison des paramÃ¨tre								*/
+	int 					m_parameter;			/**< ParamÃ¨tre comparÃ©													*/
 	float					m_entropy;				/**< Entropie du noeud													*/
 	int						m_samples;				/**< Nombre de fleur dans le noeud										*/
-	int *					m_tabValue;				/**< Tableau du nombre fleur par éspèce									*/
+	int *					m_tabValue;				/**< Tableau du nombre fleur par Ã©spÃ¨ce									*/
 
 	flowerListNode *		m_iris;					/**< Liste des fleurs													*/
 
