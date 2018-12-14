@@ -47,11 +47,13 @@ struct sNode
 
 list * CreateDataList(FILE * p_pfile, list * p_pflowerlist, int p_nbData);
 
-void insererrFin(list * p_pflowerList, flower p_dataFlower);
+void insererFin(list * p_pflowerList, flower p_dataFlower);
 
 flowerListNode * creerNoeudList(flower p_dataFlower);
 
 int CountNbLignes(FILE * p_pfile);
+
+void afficherList(list * p_pHead);
 
 
 #endif //_IRIS_H_

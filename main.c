@@ -2,37 +2,31 @@
 
 int main(int argc, char **argv)
 {
-	flower * fleur = (flower*)calloc(1, sizeof(flower));
+	list * flowerList = (list*)calloc(1, sizeof(list));
 	int nbLignes, c;
-	FILE* file;
-	errno_t err = fopen_s(&file, "data.txt", "r+");
+	FILE* pfile;
+	errno_t err = fopen_s(&pfile, "data.txt", "r+");
 
-	if (!err)
+	if (pfile == NULL)
 	{
 		printf("fichier non valide");
+		system("pause");
 		return EXIT_FAILURE;
 	}
 
-	system("pause");
-	fseek(file, 0L, SEEK_SET);
+	fseek(pfile, 0L, SEEK_SET);
 
-	nbLignes = CountNbLignes(file);
+	nbLignes = CountNbLignes(pfile);
 	printf("nombre de lignes : %d\n", nbLignes);
 
 	// Set pointer to beginning of file:
-	fseek(file, 0L, SEEK_SET);
-	system("pause");
+	fseek(pfile, 0L, SEEK_SET);
 
-	for (int i = 0; i < 10; i++)
-	{
-		flower tmp;
-		fscanf_s(file, "%f,%f,%f,%f,", &tmp.m_sepalWidth, &tmp.m_sepalLength, &tmp.m_petalWidth, &tmp.m_petalLength);
-		fscanf_s(file, "%s", tmp.m_specieNamed, _countof(tmp.m_specieNamed));
-		printf("%f, %f, %f, %f, %s\n", tmp.m_sepalWidth, tmp.m_sepalLength, tmp.m_petalWidth, tmp.m_petalLength, tmp.m_specieNamed);
+	flowerList = CreateDataList(pfile, flowerList, nbLignes);
 
-		c = fgetc(file);
-	}
+	afficherList(flowerList);
 
+	fclose(pfile);
 	system("pause");
 	return 0;
 }
