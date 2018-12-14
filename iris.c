@@ -1,23 +1,81 @@
 #include "iris.h"
 
-list * CreateDataList(FILE * p_file, flower p_fleur)
+/*
+list * CreateDataList(FILE * p_pfile, list * p_pflowerList, int p_nbData)
 {
-	if (!p_file)
+	if (!p_pfile)
 		return	EXIT_FAILURE;
 
-	fscanf_s(p_file, "%d, %d, %d, %d, %s\n", &p_fleur.m_sepalWidth, &p_fleur.m_sepalLength, &p_fleur.m_petalWidth, &p_fleur.m_petalLength, &p_fleur.m_specieNamed);
+	int c;
 
-	return NULL;
+	fseek(p_pfile, 0L, SEEK_SET);
+
+	for (int i = 0; i < p_nbData; i++)
+	{
+		flower tmp;
+		fscanf_s(p_pfile, "%f,%f,%f,%f,", &tmp.m_sepalWidth, &tmp.m_sepalLength, &tmp.m_petalWidth, &tmp.m_petalLength);
+		fscanf_s(p_pfile, "%s", tmp.m_specieNamed, _countof(tmp.m_specieNamed));
+		printf("%f, %f, %f, %f, %s", tmp.m_sepalWidth, tmp.m_sepalLength, tmp.m_petalWidth, tmp.m_petalLength, tmp.m_specieNamed);
+
+		inserrerFin(p_pflowerList, tmp);
+
+		// On passe à la ligne suivante
+		c = fgetc(p_pfile);
+	}
+
+	return p_pflowerList;
 }
 
-float entropy(float nb_class1, float nb_class2, float nb_class3, float efftot)
+void insererrFin(list * p_pflowerList, flower p_dataFlower)
 {
-	float val_entropy;
-	float P1_succes, P2_succes, P3_succes;
-	P1_succes = nb_class1 / efftot;
-	P2_succes = nb_class2 / efftot;
-	P3_succes = nb_class3 / efftot;
-	val_entropy = -P1_succes*log2f(P1_succes) - P2_succes*log2f(P3_succes) - P3_succes*log2f(P3_succes);
-	return val_entropy;
+	flowerListNode * pNouveau = creerNoeudListe(p_dataFlower);
+
+	if (p_pflowerList->m_head == NULL)
+	{
+		p_pflowerList->m_head = pNouveau;
+	}
+	else
+	{
+		flowerListNode * pCourant = p_pflowerList->m_head;
+
+		while (pCourant->m_next != NULL)
+			pCourant = pCourant->m_next;
+
+		pCourant->m_next = pNouveau;
+	}
+}
+
+flowerListNode * creerNoeudList(flower p_dataFlower)
+{
+	flowerListNode * pNouveau = (flowerListNode*)calloc(1, sizeof(flowerListNode));
+
+	if (pNouveau == NULL)
+		return EXIT_FAILURE;
+
+	pNouveau->m_dataFlower = p_dataFlower;
+	pNouveau->m_next = NULL;
+
+	return pNouveau;
+}
+*/
+
+int CountNbLignes(FILE * p_pfile)
+{
+	int c;
+	int nbLignes = 0;
+	int c2 = '\0';
+
+	while ((c = fgetc(p_pfile)) != EOF)
+	{
+		if (c == '\n')
+			nbLignes++;
+		c2 = c;
+	}
+
+	/* Ici, c2 est égal au caractère juste avant le EOF. */
+	if (c2 != '\n')
+		nbLignes++; /* Dernière ligne non finie */
+
+	return nbLignes;
 }
 
