@@ -32,13 +32,13 @@ struct sFlowerListNode
 
 struct sNode
 {
-	int						m_valueCompared;		/**< Valeur de comparaison des paramètre								*/
+	int					m_valueCompared;		/**< Valeur de comparaison des paramètre								*/
 	int 					m_parameter;			/**< Paramètre comparé													*/
 	float					m_entropy;				/**< Entropie du noeud													*/
-	int						m_samples;				/**< Nombre de fleur dans le noeud										*/
+	int					m_samples;				/**< Nombre de fleur dans le noeud										*/
 	int *					m_tabValue;				/**< Tableau du nombre fleur par éspèce									*/
 
-	flowerListNode *		m_iris;					/**< Liste des fleurs													*/
+	flowerListNode *			m_iris;					/**< Liste des fleurs													*/
 
 	node *					m_leftSon;				/**< Noeud fils gauche													*/
 	node *					m_rightSon;				/**< Noeud fils droit													*/
