@@ -1,6 +1,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h> // log2f();
+#include<string.h>
+#include "iris.h"
+
 
 struct best_combinaison
 {
@@ -8,6 +11,13 @@ struct best_combinaison
     float pas;
 };
 typedef struct best_combinaison b_c;
+
+struct compteur
+{
+    int cpt;
+    char espece[4];
+};
+typedef struct compteur compteur;
 
 // prend un paramètre un tableau de taille 3 contenant le nombre qu'il y a de chaque espèce ET le nombre totale de fleurs
 float entropy(float *nb_class, float efftot) 
@@ -25,13 +35,234 @@ float entropy(float *nb_class, float efftot)
 	return val_entropy;
 }
 
-//Compte le nombre de fleurs qui respectent (cbfg) et ne respectent pas la condition d'entrée (cbfd), et precise le nombre de fleurs de chaques classes dans les deux sous catégories évoquées précedemment 
-float list_traversal(liste *list, )
+int readflowername(char *Array)
 {
+        char Seto[] = "Iris-setosa";
+        char Virgi[] = "Iris-virginica";
+        char Versi[] = "Iris-versicolor";
+        
+        if( strcmp(Array,Seto) == 0 )
+        {
+            return 1;
+        }
+        else
+        {
+            printf("pas seto\n");
+        }
+        
+        if( strcmp(Array,Virgi) == 0 )
+        {
+            return 2;
+        }
+        else
+        {
+            printf("pas virgi\n");
+        }
+        
+        if( strcmp(Array,Versi) == 0 )
+        {
+            return 3;
+        }
+        else
+        {
+            printf("pas versi\n");
+        }
+        
+    return 0;
+}
+
+//Compte le nombre de fleurs qui respectent (cbfg) et ne respectent pas la condition d'entrée (cbfd), et precise le nombre de fleurs de chaques classes dans les deux sous catégories évoquées précedemment 
+int list_traversal(list *liste, float condition, int sign, int parametre, int *setosa, int *versicolor, int *virginica)// sign = 0 => '<' sign = 1 => '>'
+{
+    (*setosa) = 0;
+    (*virginica) = 0;
+    (*versicolor) = 0;
     
+    if(liste == NULL)
+    {
+        printf("No defined list\n");
+        exit(-1);
+    }
+    else
+    {
+        flowerListNode * courant;
+        courant = liste->m_head;
+        
+        while(courant->m_next != NULL)
+        {
+            if(sign == 0)
+            {
+                // PW
+                if(parametre == 4)
+                    if( courant->m_dataFlower.m_petalWidth <= condition )
+                    {
+                        if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
+                        {
+                            (*setosa)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 2 )
+                        {
+                            (*virginica)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 3 )
+                        {
+                            (*versicolor)++;
+                        }
+                        else
+                            printf("erreur ligne 106 \n");
+                    }
+                //PL
+                if(parametre == 3)
+                    if( courant->m_dataFlower.m_petalLength <= condition )
+                    {
+                        if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
+                        {
+                            (*setosa)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 2 )
+                        {
+                            (*virginica)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 3 )
+                        {
+                            (*versicolor)++;
+                        }
+                        else
+                            printf("erreur ligne 125 \n");
+                    }
+                //SW
+                if(parametre == 2)
+                    if( courant->m_dataFlower.m_sepalWidth <= condition )
+                    {
+                        if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
+                        {
+                            (*setosa)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 2 )
+                        {
+                            (*virginica)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 3 )
+                        {
+                            (*versicolor)++;
+                        }
+                        else
+                            printf("erreur ligne 144 \n");
+                    }
+                //SL
+                if(parametre == 1)
+                    if( courant->m_dataFlower.m_sepalLength <= condition )
+                    {
+                        if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
+                        {
+                            (*setosa)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 2 )
+                        {
+                            (*virginica)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 3 )
+                        {
+                            (*versicolor)++;
+                        }
+                        else
+                            printf("erreur ligne 163 \n");
+                    }
+                
+            }
+            
+            if(sign == 1)
+            {
+                // PW
+                if(parametre == 4)
+                    if( courant->m_dataFlower.m_petalWidth >= condition )
+                    {
+                        if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
+                        {
+                            (*setosa)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 2 )
+                        {
+                            (*virginica)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 3 )
+                        {
+                            (*versicolor)++;
+                        }
+                        else
+                            printf("erreur ligne 187 \n");
+                    }
+                //PL
+                if(parametre == 3)
+                    if( courant->m_dataFlower.m_petalLength >= condition )
+                    {
+                        if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
+                        {
+                            (*setosa)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 2 )
+                        {
+                            (*virginica)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 3 )
+                        {
+                            (*versicolor)++;
+                        }
+                        else
+                            printf("erreur ligne 206 \n");
+                    }
+                //SW
+                if(parametre == 2)
+                    if( courant->m_dataFlower.m_sepalWidth >= condition )
+                    {
+                        if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
+                        {
+                            (*setosa)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 2 )
+                        {
+                            (*virginica)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 3 )
+                        {
+                            (*versicolor)++;
+                        }
+                        else
+                            printf("erreur ligne 225 \n");
+                    }
+                //SL
+                if(parametre == 1)
+                    if( courant->m_dataFlower.m_sepalLength >= condition )
+                    {
+                        if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
+                        {
+                            (*setosa)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 2 )
+                        {
+                            (*virginica)++;
+                        }
+                        else if( readflowername(courant->m_dataFlower.m_specieNamed) == 3 )
+                        {
+                            (*versicolor)++;
+                        }
+                        else
+                            printf("erreur ligne 244 \n");
+                    }
+            }
+            
+            courant = courant->m_next;
+        }
+        
+    }
+    
+    int N_respected_condition;
+    N_respected_condition = *setosa + (*virginica) + (*versicolor); 
+    return N_respected_condition;
 }
 
 // Retourne la valeur de comparaison la plus optimale (grâce à une comparaison des entropie) à utiliser pour une classe et un pas choisie en entrée (classe = PL & PW & SL & SW)
+/*
 float compare(b_c value, float val_entropy, int val_max) 
 {
     printf("Selectionner un char et un pas :\n");
@@ -53,11 +284,14 @@ float compare_class()
 {
     
 }
+*/
+/*
 
 int main()
 {
     float tab[3] = { 0, 49 , 5 };
 	printf("entropy : %lf\n", entropy(tab,54));
-
+    
 	return 0;
 }
+*/
