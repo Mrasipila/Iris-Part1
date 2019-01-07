@@ -19,32 +19,32 @@ typedef struct sParam
 
 struct sList
 {
-	flowerListNode *		m_head;				          /**< Pointeur sur la tête de liste										              */
+	flowerListNode *		m_head;				          /**< Pointeur sur la tÃªte de liste										              */
 };
 
 typedef struct sFlower
 {
-	float					m_petalWidth;		          /**< Largeur pétale (paramètre 3)										                  */
-	float					m_petalLength;			      /**< Longueur pétal (paramètre 2)									                      */
-	float					m_sepalWidth;			      /**< Largeur sépal (paramètre 1)							                              */
-	float					m_sepalLength;			      /**< Longueur sépal (paramètre 0)										                  */
-	char					m_specieNamed[30];		      /**< Nom de l'éspèce (classe)											                  */
+	float					m_petalWidth;		          /**< Largeur pÃ©tale (paramÃ¨tre 3)										                  */
+	float					m_petalLength;			      /**< Longueur pÃ©tal (paramÃ¨tre 2)									                      */
+	float					m_sepalWidth;			      /**< Largeur sÃ©pal (paramÃ¨tre 1)							                              */
+	float					m_sepalLength;			      /**< Longueur sÃ©pal (paramÃ¨tre 0)										                  */
+	char					m_specieNamed[30];		      /**< Nom de l'Ã©spÃ¨ce (classe)											                  */
 }flower;
 
 struct sFlowerListNode
 {
-	flower					m_dataFlower;			      /**< Caractéristique de la fleur										                  */
+	flower					m_dataFlower;			      /**< CaractÃ©ristique de la fleur										                  */
 	flowerListNode *		m_next;					      /**< Pointeur vers le noeud de liste suivant.							                  */
 };
 
 struct sTreeNode
 {
-	float					m_valueCompared;		      /**< Valeur de comparaison des paramètre								                  */
-	int					m_paramCompared;		      /**< paramètre de comparaison           								                  */
-	param					m_parameterTab[4];			  /**< Tableau des paramètres (voir commentaire de la structure fleur pour l'ordre        */											
+	float					m_valueCompared;		      /**< Valeur de comparaison des paramÃ¨tre								                  */
+	int					m_paramCompared;		      /**< paramÃ¨tre de comparaison           								                  */
+	param					m_parameterTab[4];			  /**< Tableau des paramÃ¨tres (voir commentaire de la structure fleur pour l'ordre        */											
 	float					m_entropy;				      /**< Entropie du noeud													              */
 	int						m_samples;				      /**< Nombre de fleur dans le noeud										              */
-	float *					m_tabValue;				      /**< Tableau du nombre de fleurs par éspèce									          */
+	float *					m_tabValue;				      /**< Tableau du nombre de fleurs par Ã©spÃ¨ce									          */
 
 	list *		            m_irisList;				      /**< Liste des fleurs													                  */
 
@@ -77,6 +77,13 @@ float ComparedPetalLength(treeNode * p_pflowerNode);
 
 float * ComparedSepalWidth(treeNode * p_pflowerNode);
 
+void sort_SepalLengthList(float SLvalueCompared, list *flowerList, list *L1, list *L2);
+
+void sort_SepalWidthList(float SWvalueCompared, list *flowerList, list *L1, list *L2);
+
+void sort_PetalLengthList(float PLvalueCompared, list *flowerList, list *L1, list *L2);
+
+void sort_PetalWidthList(float PWvalueCompared, list *flowerList, list *L1, list *L2);
 
 
 #endif //_IRIS_H_
