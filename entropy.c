@@ -1,23 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h> // log2f();
-#include<string.h>
 #include "iris.h"
-
-
-struct best_combinaison
-{
-    char class[2];
-    float pas;
-};
-typedef struct best_combinaison b_c;
-
-struct compteur
-{
-    int cpt;
-    char espece[4];
-};
-typedef struct compteur compteur;
+#include "entropy.h"
 
 // prend un paramètre un tableau de taille 3 contenant le nombre qu'il y a de chaque espèce ET le nombre totale de fleurs
 float entropy(float *nb_class, float efftot) 
@@ -35,6 +17,8 @@ float entropy(float *nb_class, float efftot)
 	return val_entropy;
 }
 
+
+// Foncion qui compare 
 int readflowername(char *Array)
 {
         char Seto[] = "Iris-setosa";
@@ -45,30 +29,19 @@ int readflowername(char *Array)
         {
             return 1;
         }
-        else
-        {
-            printf("pas seto\n");
-        }
-        
-        if( strcmp(Array,Virgi) == 0 )
+        else if( strcmp(Array,Virgi) == 0 )
         {
             return 2;
         }
-        else
-        {
-            printf("pas virgi\n");
-        }
-        
-        if( strcmp(Array,Versi) == 0 )
+        else if( strcmp(Array,Versi) == 0 )
         {
             return 3;
         }
         else
         {
-            printf("pas versi\n");
+            printf("espece inconnu\n");
+            return 0;
         }
-        
-    return 0;
 }
 
 //Compte le nombre de fleurs qui respectent (cbfg) et ne respectent pas la condition d'entrée (cbfd), et precise le nombre de fleurs de chaques classes dans les deux sous catégories évoquées précedemment 
@@ -94,6 +67,7 @@ int list_traversal(list *liste, float condition, int sign, int parametre, int *s
             {
                 // PW
                 if(parametre == 4)
+                {
                     if( courant->m_dataFlower.m_petalWidth <= condition )
                     {
                         if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
@@ -111,8 +85,10 @@ int list_traversal(list *liste, float condition, int sign, int parametre, int *s
                         else
                             printf("erreur ligne 106 \n");
                     }
+                }
                 //PL
                 if(parametre == 3)
+                {
                     if( courant->m_dataFlower.m_petalLength <= condition )
                     {
                         if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
@@ -130,8 +106,10 @@ int list_traversal(list *liste, float condition, int sign, int parametre, int *s
                         else
                             printf("erreur ligne 125 \n");
                     }
+                }
                 //SW
                 if(parametre == 2)
+                {
                     if( courant->m_dataFlower.m_sepalWidth <= condition )
                     {
                         if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
@@ -149,8 +127,10 @@ int list_traversal(list *liste, float condition, int sign, int parametre, int *s
                         else
                             printf("erreur ligne 144 \n");
                     }
+                }
                 //SL
                 if(parametre == 1)
+                {
                     if( courant->m_dataFlower.m_sepalLength <= condition )
                     {
                         if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
@@ -168,13 +148,14 @@ int list_traversal(list *liste, float condition, int sign, int parametre, int *s
                         else
                             printf("erreur ligne 163 \n");
                     }
-                
+                }
             }
             
             if(sign == 1)
             {
                 // PW
                 if(parametre == 4)
+                {
                     if( courant->m_dataFlower.m_petalWidth >= condition )
                     {
                         if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
@@ -192,8 +173,10 @@ int list_traversal(list *liste, float condition, int sign, int parametre, int *s
                         else
                             printf("erreur ligne 187 \n");
                     }
+                }
                 //PL
                 if(parametre == 3)
+                {
                     if( courant->m_dataFlower.m_petalLength >= condition )
                     {
                         if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
@@ -211,8 +194,10 @@ int list_traversal(list *liste, float condition, int sign, int parametre, int *s
                         else
                             printf("erreur ligne 206 \n");
                     }
+                }
                 //SW
                 if(parametre == 2)
+                {
                     if( courant->m_dataFlower.m_sepalWidth >= condition )
                     {
                         if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
@@ -230,8 +215,10 @@ int list_traversal(list *liste, float condition, int sign, int parametre, int *s
                         else
                             printf("erreur ligne 225 \n");
                     }
+                }
                 //SL
                 if(parametre == 1)
+                {
                     if( courant->m_dataFlower.m_sepalLength >= condition )
                     {
                         if( readflowername(courant->m_dataFlower.m_specieNamed) == 1 )
@@ -249,6 +236,7 @@ int list_traversal(list *liste, float condition, int sign, int parametre, int *s
                         else
                             printf("erreur ligne 244 \n");
                     }
+                }
             }
             
             courant = courant->m_next;
