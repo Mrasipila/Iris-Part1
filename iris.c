@@ -71,9 +71,9 @@ int CountNbLignes(FILE * p_pfile)
 		c2 = c;
 	}
 
-	/* Ici, c2 est égal au caractère juste avant le EOF. */
+	/* Ici, c2 est Ã©gal au caractÃ¨re juste avant le EOF. */
 	if (c2 != '\n')
-		nbLignes++; /* Dernière ligne non finie */
+		nbLignes++; /* DerniÃ¨re ligne non finie */
 
 	return nbLignes;
 }
@@ -85,7 +85,7 @@ void afficherList(list * p_pflowerList)
 		exit(-1);
 
 	flowerListNode * pCourant = p_pflowerList->m_head;
-	printf("\n\n Ma Liste de Fleur et leurs caractéristiques : \n");
+	printf("\n\n Ma Liste de Fleur et leurs caractÃ©ristiques : \n");
 	printf("Longueur Sepal | Largeur Sepal | Longueur Petal | Largeur Petal | Nom Espece \n");
 		  
 	while (pCourant != NULL)
@@ -326,6 +326,90 @@ void bestEntropy(treeNode * p_pflowerNode, int pParameterCompared, float pEntrop
         p_pflowerNode->m_valueCompared = pValueCompared;
         p_pflowerNode->m_paramCompared = pParameterCompared;
     }    
+}
+
+void sort_SepalLengthList(float SLvalueCompared, list *flowerList, list *L1, list *L2)
+{
+    flowerListNode *current;
+    current = flowerList->m_head;
+    L1->m_head = NULL;
+    L2->m_head = NULL;
+    
+    while(current != NULL)
+    {
+        if(current->m_dataFlower.m_sepalLength <= SLvalueCompared)
+        {
+            insererFin(L1, current->m_dataFlower);
+        }
+        else
+        {
+            insererFin(L2, current->m_dataFlower);
+        }
+        current = current->m_next;
+    }
+}
+
+void sort_SepalWidthList(float SWvalueCompared, list *flowerList, list *L1, list *L2)
+{
+    flowerListNode *current;
+    current = flowerList->m_head;
+    L1->m_head = NULL;
+    L2->m_head = NULL;
+    
+    while(current != NULL)
+    {
+        if(current->m_dataFlower.m_sepalWidth <= SWvalueCompared)
+        {
+            insererFin(L1, current->m_dataFlower);
+        }
+        else
+        {
+            insererFin(L2, current->m_dataFlower);
+        }
+        current = current->m_next;
+    }
+}
+
+void sort_PetalLengthList(float PLvalueCompared, list *flowerList, list *L1, list *L2)
+{
+    flowerListNode *current;
+    current = flowerList->m_head;
+    L1->m_head = NULL;
+    L2->m_head = NULL;
+    
+    while(current != NULL)
+    {
+        if(current->m_dataFlower.m_petalLength <= PLvalueCompared)
+        {
+            insererFin(L1, current->m_dataFlower);
+        }
+        else
+        {
+            insererFin(L2, current->m_dataFlower);
+        }
+        current = current->m_next;
+    }
+}
+
+void sort_PetalWidthList(float PWvalueCompared, list *flowerList, list *L1, list *L2)
+{
+    flowerListNode *current;
+    current = flowerList->m_head;
+    L1->m_head = NULL;
+    L2->m_head = NULL;
+    
+    while(current != NULL)
+    {
+        if(current->m_dataFlower.m_petalWidth <= PWvalueCompared)
+        {
+            insererFin(L1, current->m_dataFlower);
+        }
+        else
+        {
+            insererFin(L2, current->m_dataFlower);
+        }
+        current = current->m_next;
+    }
 }
 
 
