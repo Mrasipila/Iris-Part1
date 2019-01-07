@@ -51,8 +51,9 @@ int main(int argc, char **argv)
     {
         printf("min : %lf  max : %lf \n", arbreDeDecision->m_parameterTab[i].m_min, arbreDeDecision->m_parameterTab[i].m_max);
     }
-
-    float entropValue = ComparedSepalLength(arbreDeDecision);
+    
+    float entropValue2 = ComparedSepalLength(arbreDeDecision);
+    float entropValue = ComparedPetalLength(arbreDeDecision);
     printf("%lf\n", entropValue);
     
 	fclose(pfile);

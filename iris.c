@@ -162,10 +162,6 @@ void InitialisationMinEtMax(treeNode * p_pflowerNode)
     }
 }
 
-/*float BestEntropy(float entropy1, float entropy2)
-{
-    
-}*/
 
 float * ComparedSepalWidth(treeNode * p_pflowerNode)
 {
@@ -195,32 +191,48 @@ float * ComparedSepalWidth(treeNode * p_pflowerNode)
     return tab;
 }
 
-float * ComparedPetalLength(treeNode * p_pflowerNode)
+float ComparedPetalLength(treeNode * p_pflowerNode)
 {
+    if (p_pflowerNode == NULL || p_pflowerNode->m_irisList->m_head == NULL)
+        exit(-1);
     
-    flowerListNode * pCourant = p_pflowerNode->m_irisList->m_head;
+    flowerListNode * pCourant;
     float tab[3] = {0, 0, 0};
+    float entropValue = 0;
+    float entropValueInverse = 0;
     
     
-    int min = p_pflowerNode->m_parameterTab[2].m_min;
-    int max = p_pflowerNode->m_parameterTab[2].m_max;
-    for (int j = min ; j <= max ; j += 0.05)
+    float min = p_pflowerNode->m_parameterTab[2].m_min;
+    float max = p_pflowerNode->m_parameterTab[2].m_max;
+    for (float j = min ; j < max+0.05 ; j += 0.05)
     {
+        pCourant = p_pflowerNode->m_irisList->m_head;
+        tab[0] = 0;
+        tab[1] = 0;
+        tab[2] = 0;
         while(pCourant != NULL)
         {
             if (pCourant->m_dataFlower.m_petalLength <= j && strcmp(pCourant->m_dataFlower.m_specieNamed, "Iris-setosa") == 0)
-                tab[0] += tab[0];
-            else if (pCourant->m_dataFlower.m_petalLength <= j && strcmp(pCourant->m_dataFlower.m_specieNamed, "Iris-versicolor") == 0)
-                tab[1] += tab[1];
-            else if (pCourant->m_dataFlower.m_petalLength <= j && strcmp(pCourant->m_dataFlower.m_specieNamed, "Iris-virginica") == 0)
-                tab[2] += tab[2];
-            else
-                exit(-1);
+                tab[0] += 1;
+            if (pCourant->m_dataFlower.m_petalLength <= j && strcmp(pCourant->m_dataFlower.m_specieNamed, "Iris-versicolor") == 0)
+                tab[1] += 1;
+            if (pCourant->m_dataFlower.m_petalLength <= j && strcmp(pCourant->m_dataFlower.m_specieNamed, "Iris-virginica") == 0)
+                tab[2] += 1;
             
-            pCourant = pCourant->m_next;   
+            pCourant = pCourant->m_next;
         }
+    float nbFlowerInTab = tab[0] + tab[1] + tab[2];
+    float tabInverse[3] = {p_pflowerNode->m_tabValue[0] - tab[0], p_pflowerNode->m_tabValue[1] - tab[1], p_pflowerNode->m_tabValue[2] - tab[2]};
+    float nbFlowerInTabInverse = tabInverse[0] + tabInverse[1] + tabInverse[2];
+    entropValue = entropy(tab, nbFlowerInTab);
+    entropValueInverse = entropy(tabInverse, nbFlowerInTabInverse);
+    printf("%f   %f   %f\n", tab[0], tab[1], tab[2]);
+    printf("nb fleur dans tab1 : %f\n", nbFlowerInTab);
+    printf("nb fleur dans tabInverse1 : %f\n", nbFlowerInTabInverse);
+    printf("val entropi1 : %f\n", entropValue);
+    printf("val entropinverse1 :%f\n\n", entropValueInverse);
     }
-    return tab;
+    return entropValue;
 }
 
 float * ComparedPetalWidth(treeNode * p_pflowerNode)
@@ -255,15 +267,17 @@ float ComparedSepalLength(treeNode * p_pflowerNode)
     if (p_pflowerNode == NULL || p_pflowerNode->m_irisList->m_head == NULL)
         exit(-1);
     
+    p_pflowerNode->m_valueCompared = 0;
+    
     flowerListNode * pCourant;
     float tab[3] = {0, 0, 0};
     float entropValue = 0;
     float entropValueInverse = 0;
-    
+    float entropTot = 0;
     
     float min = p_pflowerNode->m_parameterTab[0].m_min;
     float max = p_pflowerNode->m_parameterTab[0].m_max;
-    for (float j = min ; j <= max+0.05 ; j += 0.05)
+    for (float j = min ; j < max+0.05 ; j += 0.05)
     {
         pCourant = p_pflowerNode->m_irisList->m_head;
         tab[0] = 0;
@@ -280,15 +294,38 @@ float ComparedSepalLength(treeNode * p_pflowerNode)
             
             pCourant = pCourant->m_next;
         }
+        
     float nbFlowerInTab = tab[0] + tab[1] + tab[2];
     float tabInverse[3] = {p_pflowerNode->m_tabValue[0] - tab[0], p_pflowerNode->m_tabValue[1] - tab[1], p_pflowerNode->m_tabValue[2] - tab[2]};
-    float nbFlowerInTabInverse = tabInverse[0] + tabInverse[0] + tabInverse[0];
+    float nbFlowerInTabInverse = tabInverse[0] + tabInverse[1] + tabInverse[2];
+    
     entropValue = entropy(tab, nbFlowerInTab);
     entropValueInverse = entropy(tabInverse, nbFlowerInTabInverse);
-    printf("%f\n", entropValue);
-    printf("%f\n", entropValueInverse);
+    entropTot = entropValue + entropValueInverse;
+    
+    bestEntropy(p_pflowerNode, 0, entropTot, j);
+                
+                
+    printf("%f   %f   %f\n", tab[0], tab[1], tab[2]);
+    printf("nb fleur dans tab : %f\n", nbFlowerInTab);
+    printf("nb fleur dans tabInverse : %f\n", nbFlowerInTabInverse);
+    printf("val entropi : %f\n", entropValue);
+    printf("val entropinverse :%f\n\n", entropValueInverse);
     }
+    
+    printf("
     return entropValue;
+}
+
+
+void bestEntropy(treeNode * p_pflowerNode, int pParameterCompared, float pEntropValue, float pValueCompared)
+{
+    if(p_pflowerNode->m_entropy > pEntropValue)
+    {
+        p_pflowerNode->m_entropy = pEntropValue;
+        p_pflowerNode->m_valueCompared = pValueCompared;
+        p_pflowerNode->m_paramCompared = pParameterCompared;
+    }    
 }
 
 
